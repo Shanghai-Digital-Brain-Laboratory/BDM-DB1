@@ -122,7 +122,7 @@ Then the performance on all environments will be recorded in the log at `rl_eval
 
 ### Framework Overview
 
-We adapt our training procedure and preprocessing logic for NLP tasks and vision tasks with [Megatron-LM](https://github.com/NVIDIA/Megatron-LM). To improve the data-loading efficiency, we equip data caching and lazy load for large-scale datasets. For the implementation of [TransformerXL](https://arxiv.org/abs/1901.02860) and its relative positional encoding and memory caching, we reference TransformerXL. In addition, extra techniques and tricks were taken into consideration to stabilize the training procedure.
+We adapt our training procedure and preprocessing logic for NLP tasks and vision tasks with [Megatron-LM](https://github.com/NVIDIA/Megatron-LM). To improve the data-loading efficiency, we equip data caching and lazy load for large-scale datasets. For the implementation of Transformer and its relative positional encoding and memory caching, we refer to [TransformerXL](https://arxiv.org/abs/1901.02860). In addition, extra techniques and tricks were taken into consideration to stabilize the training procedure.
 
 
 ### Training Overview
