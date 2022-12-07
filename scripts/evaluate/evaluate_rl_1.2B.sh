@@ -60,7 +60,7 @@ TEST_SUITES="
 "
 
 
-RL_CACHE_DIR=/home/ziyu/workspace/DB1/rl_minimal_exp_data
+RL_CACHE_DIR=[your rl_minimal_exp_data]
 
 deepspeed --include localhost --master_port $DS_PORT src/evaluation/evaluate_rl.py \
     --load-dir [your model_checkpoint] \
