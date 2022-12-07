@@ -119,9 +119,10 @@ Then the performance on all environments will be recorded in the log at `rl_eval
 - [ ] Pretrained models with modern tricks like DeepNorm and etc.
 
 ## Implementation details
+
 ### Framework Overview
-We adapt our training procedure and preprocessing logic for NLP tasks and vision tasks from [Megatron-LM](https://github.com/NVIDIA/Megatron-LM). Then we build our own offline RL datasets in a way similar to [Trajectory Transformer](https://github.com/JannerM/trajectory-transformer) with data caching and lazy load for large scale dataset..
-For transformer model implementation, we take [transformers](https://github.com/huggingface/transformers) for reference. In general, DB1 model is adapted from [TransformerXL](https://arxiv.org/abs/1901.02860) for its relative positional encoding and memory mechanism. And we add extra techniques and tricks to stabilize the training procedure.
+
+We adapt our training procedure and preprocessing logic for NLP tasks and vision tasks with [Megatron-LM](https://github.com/NVIDIA/Megatron-LM). To improve the data-loading efficiency, we equip data caching and lazy load for large-scale datasets. For the implementation of [TransformerXL](https://arxiv.org/abs/1901.02860) and its relative positional encoding and memory caching, we reference TransformerXL. In addition, extra techniques and tricks were taken into consideration to stabilize the training procedure.
 
 
 ### Training Overview
