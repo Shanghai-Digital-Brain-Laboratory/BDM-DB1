@@ -169,12 +169,12 @@ def get_parser_for_basic_args():
 
     parser.add_argument(
         "--use-deepnorm", type=str2bool, default=False,
-        help="Wheter to use DeepNorm described in https://arxiv.org/pdf/2203.00555.pdf"
+        help="Whether to use DeepNorm described in https://arxiv.org/pdf/2203.00555.pdf"
     )
 
     parser.add_argument(
         "--share-input-output-embedding", type=str2bool, default=False,
-        help="Wheter to share embedding weights between input and output layer"
+        help="Whether to share embedding weights between input and output layer"
     )
 
     return parser
