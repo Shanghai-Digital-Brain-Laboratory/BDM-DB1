@@ -100,6 +100,15 @@ tar xzvf minimal_expert_data.tar.gz
 # you will get a folder named `rl_minimal_exp_data`
 ```
 ## Runnable scripts
+### Pretrain
+#### Simulated decision making tasks [WIP]
+Fill in `$RL_CACHE_DIR` in the following script.
+We provide pretrain scripts on d4rl.mujoco tasks with is available online.
+```
+cd [DB1's directory]
+export PYTHONPATH=. # you can also use absolute path or any correct form.
+sh scripts/pretrain/pretrain_mujoco.sh [choose a port for deepspeed, e.g. 29002]
+```
 ### Evaluation
 #### Simulated decision making tasks
 Fill in `$RL_CACHE_DIR` in the following script and argument of `--load-dir [your model_checkpoint]`, for other potential checkpoints dir, you can change `$TAG_NAME` to load them, for detail you can see [DeepSpeed Model Checkpoint](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html).
@@ -107,7 +116,7 @@ Fill in `$RL_CACHE_DIR` in the following script and argument of `--load-dir [you
 ```
 cd [DB1's directory]
 export PYTHONPATH=. # you can also use absolute path or any correct form.
-sh scripts/evaluate_rl_1.3B.sh [choose a port for deepspeed, e.g. 29002]
+sh scripts/evaluate/evaluate_rl_1.3B.sh [choose a port for deepspeed, e.g. 29002]
 ```
 
 Then the performance on all environments will be recorded in the log at `rl_eval_results/db1_870task_checkpoint/results.output`
