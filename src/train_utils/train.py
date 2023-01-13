@@ -20,9 +20,7 @@ import torch
 
 from src.checkpointing import save_checkpoint
 from src.mpu import print_rank_0
-from src.evaluation.evaluate_rl import evalute_one_episode
-from src.evaluation.evaluate_vqa import evaluate_vqa
-from src.evaluation.evaluate_ic import evaluate_ic
+from src.evaluation.evaluate_rl import evaluate_env
 import numpy as np
 
 from src.data.text_decoder import Decoder
@@ -121,18 +119,18 @@ def evaluate_and_print_results(
 
             total_loss = total_loss + np.mean(loss_list)
 
-            if torch.distributed.get_rank() == 0:
-
-                # eval rl tasks
-                for env_name in args.eval_env_names:
-                    ep_ret, ep_len = evalute_one_episode(
-                        args, model, env_name
-                    )
-                    episode_return[env_name].append(ep_ret)
-                    episode_length[env_name].append(ep_len)
 
         # XXX: be careful with this when use parallel
         total_loss /= args.eval_iters
+
+        if torch.distributed.get_rank() == 0:
+            # eval rl tasks
+            for env_name in args.eval_env_names:
+                ep_ret, ep_len = evaluate_env(
+                    args, model, env_name
+                )
+                episode_return[env_name].append(ep_ret)
+                episode_length[env_name].append(ep_len)
 
     print_rank_0("Validation loss: {:.6E}".format(total_loss))
     print_rank_0(f"Validation loss all: {sub_loss}")
@@ -143,16 +141,7 @@ def evaluate_and_print_results(
         and torch.distributed.get_rank() == 0
         and data_iters_dict.get("ic")
     ):
-        eval_ic_result = evaluate_ic(
-            args,
-            model,
-            data_iters_dict["ic"],
-            text_decoder,
-            get_batch_fn,
-            skip_metrics=["SPICE"],
-            eval_iter=args.eval_ic_iter,
-            print_first_k=10,
-        )
+        raise NotImplementedError
 
     # eval vqa
     if (
@@ -160,15 +149,7 @@ def evaluate_and_print_results(
         and torch.distributed.get_rank() == 0
         and data_iters_dict.get("vqa") is not None
     ):
-        eval_vqa_result = evaluate_vqa(
-            args,
-            model,
-            data_iters_dict["vqa"],
-            text_decoder,
-            get_batch_fn,
-            eval_iter=args.eval_vqa_iter,
-            print_first_k=10,
-        )
+        raise NotImplementedError
 
     if sm_writer:
         sm_writer.add_scalar("validation/loss", total_loss, iteration_log)
@@ -176,20 +157,6 @@ def evaluate_and_print_results(
             sm_writer.add_scalar(
                 f"validation/{k}_loss", l / args.eval_iters, iteration_log
             )
-
-        # ic info
-        if args.eval_ic_iter > 0 and data_iters_dict.get("ic") is not None:
-            for method, val in eval_ic_result.items():
-                sm_writer.add_scalar(f"validation ic/{method}", val, iteration_log)
-
-        # vqa info
-        if args.eval_vqa_iter > 0 and data_iters_dict.get("vqa") is not None:
-            sm_writer.add_scalar(
-                f"validation vqa/overall", eval_vqa_result["overall"], iteration_log
-            )
-
-            for method, val in eval_vqa_result["perAnswerType"].items():
-                sm_writer.add_scalar(f"validation vqa/{method}", val, iteration_log)
 
         for env_name in args.eval_env_names:
             ep_ret = np.mean(episode_return[env_name])

@@ -17,6 +17,7 @@ https://github.com/NVIDIA/Megatron-LM/blob/main/megatron/arguments.py"""
 
 from src.config import get_parser_for_basic_args, str2bool
 import deepspeed
+from src.evaluation.rl.rl_eval_config import _add_rl_eval_args
 
 
 def parse_args():
@@ -30,6 +31,7 @@ def parse_args():
     parser = _add_initialization_args(parser)
     parser = _add_deepspeed_args(parser)
     parser = _add_finetune_args(parser)
+    parser = _add_rl_eval_args(parser)
 
     args = parser.parse_args()
 

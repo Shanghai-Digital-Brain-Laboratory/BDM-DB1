@@ -26,6 +26,7 @@ from src.config import get_parser_for_basic_args, str2bool
 from src import mpu
 from src.mpu import print_rank_0
 from src.train_utils.train_config import _add_dataset_args, _add_deepspeed_args
+from src.evaluation.rl.rl_eval_config import _add_rl_eval_args
 import gym
 import d4rl
 import torch
@@ -59,6 +60,8 @@ def get_args():
     parser = get_parser_for_basic_args()
     parser = _add_deepspeed_args(parser)
     parser = _add_dataset_args(parser)
+
+    # used for scripts that calling this __file__
     parser.add_argument(
         "--seed", type=int, default=42
     )
@@ -71,16 +74,10 @@ def get_args():
         nargs="*",
         help="Environment name to test, which will be pass to gym.make",
     )
-
     parser.add_argument("--task-suite-name", nargs="*")
 
-    parser.add_argument("--num-trials", type=int, default=3)
-    parser.add_argument("--max-step-size", type=int, default=None)
-    parser.add_argument("--strict-length", type=str2bool, default=True)
-    parser.add_argument("--minimal-expert-data", type=str2bool, required=True)
-
+    parser = _add_rl_eval_args(parser)
     return parser.parse_args()
-
 
 def get_model(args):
     if args.model == "gpt":

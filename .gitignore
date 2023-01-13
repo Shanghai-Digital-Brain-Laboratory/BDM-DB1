@@ -2,7 +2,7 @@
 /dataset/d4rl
 /dataset/mycocoevalcap
 /results
-1.3B*/
 .vscode
 .idea
 d4rl/
+__pycache__/
