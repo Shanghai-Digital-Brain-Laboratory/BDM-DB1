@@ -19,7 +19,7 @@ Pretraining scripts, model checkpoints, and training data will come soon.
 
 Suppose you've already installed cuda and nvidia-drivers successfully.
 
-Download files from this [site](https://onedrive.live.com/?authkey=%21aic%5f24u3bhfesta&id=1f59bb5f1b4d1366%212401&cid=1f59bb5f1b4d1366). 
+Download files from this [site](https://1drv.ms/u/s!AmYTTRtfu1kfkmGHP9uLtwRxXrEw?e=i82g1N). 
 there are:
 - DB1's model checkpoint `db1_870task_checkpoint/`
 - Python libraries to install `external_libs.tar.gz`
@@ -87,7 +87,7 @@ Follow the instructions [here](https://github.com/deepmind/lab/tree/master/data/
 
 ## Data preparation
 ### Model checkpoints
-Download DB1's model checkpoint `db1_870task_checkpoint` from this [site](https://onedrive.live.com/?authkey=%21AIc%5F24u3BHFesTA&id=1F59BB5F1B4D1366%212401&cid=1F59BB5F1B4D1366). 
+Download DB1's model checkpoint `db1_870task_checkpoint` from this [site](https://1drv.ms/u/s!AmYTTRtfu1kfkmGHP9uLtwRxXrEw?e=i82g1N). 
 ```
 mkdir model_checkpoints
 mv db1_870task_checkpoint model_checkpoints
